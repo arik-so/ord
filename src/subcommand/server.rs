@@ -1341,9 +1341,9 @@ impl Server {
         };
       };
 
-      if let Some(delegate) = inscription.delegate() {
+      if let Some(delegate) = inscription.delegates().first() {
         inscription = index
-          .get_inscription_by_id(delegate)?
+          .get_inscription_by_id(delegate.clone())?
           .ok_or_not_found(|| format!("delegate {inscription_id}"))?
       }
 
@@ -1441,9 +1441,9 @@ impl Server {
         .get_inscription_by_id(inscription_id)?
         .ok_or_not_found(|| format!("inscription {inscription_id}"))?;
 
-      if let Some(delegate) = inscription.delegate() {
+      if let Some(delegate) = inscription.delegates().first() {
         inscription = index
-          .get_inscription_by_id(delegate)?
+          .get_inscription_by_id(delegate.clone())?
           .ok_or_not_found(|| format!("delegate {inscription_id}"))?
       }
 
@@ -5893,7 +5893,7 @@ next
     server.mine_blocks(1);
 
     let inscription = Inscription {
-      delegate: Some(delegate.value()),
+      delegates: vec![delegate.value()],
       ..Default::default()
     };
 
