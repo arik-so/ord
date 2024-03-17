@@ -1343,11 +1343,10 @@ impl Server {
 
       // return the first inscription where the delegate exists
       // probably worth considering some sort of limitation to mitigate "DoSability"
-      let inscription_override = inscription.delegates().iter().find_map(|delegate| {
-        index
-          .get_inscription_by_id(delegate.clone())
-          .unwrap_or(None)
-      });
+      let inscription_override = inscription
+        .delegates()
+        .iter()
+        .find_map(|delegate| index.get_inscription_by_id(*delegate).unwrap_or(None));
 
       inscription = inscription_override.unwrap_or(inscription);
 
@@ -1445,11 +1444,10 @@ impl Server {
         .get_inscription_by_id(inscription_id)?
         .ok_or_not_found(|| format!("inscription {inscription_id}"))?;
 
-      let inscription_override = inscription.delegates().iter().find_map(|delegate| {
-        index
-          .get_inscription_by_id(delegate.clone())
-          .unwrap_or(None)
-      });
+      let inscription_override = inscription
+        .delegates()
+        .iter()
+        .find_map(|delegate| index.get_inscription_by_id(*delegate).unwrap_or(None));
 
       inscription = inscription_override.unwrap_or(inscription);
 
